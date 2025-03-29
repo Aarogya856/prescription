@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarogya Aahar - Dr. Riya Sharma</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary: #4e73df;
+            --secondary: #1cc88a;
+            --accent: #f6c23e;
+            --light: #f8f9fc;
+            --dark: #5a5c69;
+            --danger: #e74a3b;
+            --success: #1cc88a;
+            --info: #36b9cc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fc;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        @font-face {
+            font-family: 'Nunito';
+            src: url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), #224abe);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo i {
+            font-size: 40px;
+            color: var(--primary);
+        }
+
+        .clinic-info h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .clinic-info p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            text-align: right;
+        }
+
+        .contact-info p {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .contact-info i {
+            margin-left: 8px;
+        }
+
+        .doctor-profile {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .doctor-profile h2 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.8rem;
+        }
+
+        .qualification {
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-media a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .social-media a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .social-media i {
+            margin-right: 5px;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn i {
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #3a5ec0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(78, 115, 223, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #17a673;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(28, 200, 138, 0.3);
+        }
+
+        .btn.active {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            background-color: #f8f9fc;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-container h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .diet-table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* PDF Template Styles (hidden) */
+        .pdf-template {
+            position: absolute;
+            left: -9999px;
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            background: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .pdf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 15px;
+        }
+
+        .pdf-logo {
+            height: 80px;
+        }
+
+        .pdf-title {
+            text-align: center;
+            margin: 20px 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .patient-info, .diet-patient-info {
+            margin: 20px 0;
+        }
+
+        .info-row {
+            margin-bottom: 10px;
+            display: flex;
+        }
+
+        .info-label {
+            font-weight: bold;
+            width: 150px;
+        }
+
+        .medicines-section {
+            margin: 30px 0;
+        }
+
+        .medicines-list p {
+            margin-bottom: 8px;
+        }
+
+        .doctor-signature {
+            margin-top: 50px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .pdf-signature {
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-container {
+                margin-bottom: 1.5rem;
+                justify-content: center;
+            }
+            
+            .contact-info {
+                text-align: center;
+                margin-top: 1.5rem;
+            }
+            
+            .contact-info p {
+                justify-content: center;
+            }
+            
+            .option-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="logo.png" alt="Aarogya Aahar Logo" style="width: 60px; height: 60px;">
+                </div>
+                <div class="clinic-info">
+                    <h1>Aarogya Aahar</h1>
+                    <p>Homeopathy to Cure, Diet to Sustain – Your Health, Our Priority</p>
+                </div>
+            </div>
+            <div class="contact-info">
+                <p><i class="fas fa-phone"></i> +91 98885 31577</p>
+		<p><i class="fas fa-envelope"></i> aarogyaaahar4@gmail.com </p>
+                <p><i class="fas fa-map-marker-alt"></i> SCF 10. New Aggar Nagar, Ludhiana</p>
+            </div>
+        </header>
+        
+        <div class="doctor-profile">
+            <div class="doctor-details">
+                <h2>Dr. Riya Sharma</h2>
+                <p class="qualification">BHMS, Certified Nutritionist</p>
+                <div class="social-media">
+                    <a href="#"><i class="fab fa-instagram"></i> aarogya.aahar</a>
+                    <a href="#"><i class="fab fa-facebook"></i> aarogya.aahar</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="option-buttons">
+                <button id="prescription-btn" class="btn btn-primary">
+                    <i class="fas fa-prescription"></i> Create Prescription
+                </button>
+                <button id="diet-btn" class="btn btn-success">
+                    <i class="fas fa-utensils"></i> Create Diet Chart
+                </button>
+            </div>
+            
+            <!-- Prescription Form -->
+            <div id="prescription-form" class="form-container">
+                <h2>Prescription Form</h2>
+                <form id="prescription-data">
+                    <div class="form-group">
+                        <label for="patient-name">Patient Name:</label>
+                        <input type="text" id="patient-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-age">Age:</label>
+                        <input type="number" id="patient-age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-gender">Gender:</label>
+                        <select id="patient-gender" required>
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="prescription-date">Date:</label>
+                        <input type="date" id="prescription-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diagnosis">Diagnosis:</label>
+                        <textarea id="diagnosis" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="medicines">Medicines & Advice:</label>
+                        <textarea id="medicines" rows="5" placeholder="Enter medicines with dosage and timing..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tests">Tests Recommended (if any):</label>
+                        <textarea id="tests" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="next-visit">Next Visit (if any):</label>
+                        <input type="date" id="next-visit">
+                    </div>
+                    <div class="form-group">
+                        <label for="doctor-notes">Additional Notes:</label>
+                        <textarea id="doctor-notes" rows="3"></textarea>
+                    </div>
+                    <button type="button" id="generate-prescription" class="btn btn-primary">
+                        <i class="fas fa-file-pdf"></i> Generate Prescription PDF
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Diet Chart Form -->
+            <div id="diet-form" class="form-container">
+                <h2>Diet Chart Form</h2>
+                <form id="diet-data">
+                    <div class="form-group">
+                        <label for="diet-patient-name">Patient Name:</label>
+                        <input type="text" id="diet-patient-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diet-patient-age">Age:</label>
+                        <input type="number" id="diet-patient-age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diet-condition">Health Condition:</label>
+                        <input type="text" id="diet-condition" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diet-duration">Duration (weeks):</label>
+                        <input type="number" id="diet-duration" value="1" min="1" required>
+                    </div>
+                    
+                    <div class="diet-table-container">
+                        <table id="diet-table">
+                            <thead>
+                                <tr>
+                                    <th>Day/Time</th>
+                                    <th>Morning</th>
+                                    <th>Afternoon</th>
+                                    <th>Evening</th>
+                                    <th>Night</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows will be added by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="diet-notes">Additional Notes:</label>
+                        <textarea id="diet-notes" rows="3"></textarea>
+                    </div>
+                    
+                    <button type="button" id="generate-diet" class="btn btn-success">
+                        <i class="fas fa-file-pdf"></i> Generate Diet Chart PDF
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Templates (hidden) -->
+    <div id="prescription-template" class="pdf-template">
+        <div class="prescription-pdf">
+            <div class="pdf-header">
+                <div>
+                    <img src="logo.png" 
+                         class="pdf-logo" alt="Clinic Logo">
+                </div>
+                <div class="clinic-info">
+                    <h2>Aarogya Aahar</h2>
+                    <p>SCF 10. New Aggar Nagar, Ludhiana</p>
+                    <p>Contact: +91 98885 31577</p>
+                </div>
+            </div>
+            
+            <div class="pdf-title">
+                <h1>PRESCRIPTION</h1>
+                <div class="prescription-date">Date: <span id="pdf-prescription-date"></span></div>
+            </div>
+            
+            <div class="patient-info">
+                <div class="info-row">
+                    <span class="info-label">Patient Name:</span>
+                    <span class="info-value" id="pdf-patient-name"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Age/Sex:</span>
+                    <span class="info-value" id="pdf-patient-age-gender"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Diagnosis:</span>
+                    <span class="info-value" id="pdf-diagnosis"></span>
+                </div>
+            </div>
+            
+            <div class="medicines-section">
+                <h3>Rx</h3>
+                <div id="pdf-medicines" class="medicines-list"></div>
+            </div>
+            
+            <div class="additional-info">
+                <div class="info-row">
+                    <span class="info-label">Tests Recommended:</span>
+                    <span class="info-value" id="pdf-tests"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Next Visit:</span>
+                    <span class="info-value" id="pdf-next-visit"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Notes:</span>
+                    <span class="info-value" id="pdf-doctor-notes"></span>
+                </div>
+            </div>
+            
+            <div class="doctor-signature">
+                <div class="signature-container">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='60'%3E%3Cpath d='M10,30 Q50,10 90,30 Q130,50 190,20' stroke='%234e73df' stroke-width='2' fill='none'/%3E%3C/svg%3E" 
+                         class="pdf-signature" alt="Doctor Signature">
+                </div>
+                <div class="doctor-info">
+                    <h4>Dr. Riya Sharma</h4>
+                    <p>BHMS, Certified Nutritionist</p>
+                    <div class="social-media">
+                        <span>instagram@aarogya.aahar</span><br>
+                        <span>facebook@aarogya.aahar</span><br>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="diet-template" class="pdf-template">
+        <div class="diet-pdf">
+            <div class="pdf-header">
+                <div>
+                    <img src="logo.png" 
+                         class="pdf-logo" alt="Clinic Logo">
+                </div>
+                <div class="clinic-info">
+                    <h2>Aarogya Aahar</h2>
+                    <p>SCF 10. New Aggar Nagar, Ludhiana</p>
+                    <p>Contact: +91 98885 31577</p>
+                </div>
+            </div>
+            
+            <div class="pdf-title">
+                <h1>DIET CHART</h1>
+                <div class="diet-date">Date: <span id="pdf-diet-date"></span></div>
+            </div>
+            
+            <div class="diet-patient-info">
+                <div class="info-row">
+                    <span class="info-label">Patient Name:</span>
+                    <span class="info-value" id="pdf-diet-patient-name"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Age:</span>
+                    <span class="info-value" id="pdf-diet-patient-age"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Health Condition:</span>
+                    <span class="info-value" id="pdf-diet-condition"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Duration:</span>
+                    <span class="info-value" id="pdf-diet-duration"></span> weeks
+                </div>
+            </div>
+            
+            <div class="diet-table-section">
+                <table id="pdf-diet-table">
+                    <thead>
+                        <tr>
+                            <th>Day/Time</th>
+                            <th>Morning</th>
+                            <th>Afternoon</th>
+                            <th>Evening</th>
+                            <th>Night</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="diet-notes">
+                <h4>Additional Notes:</h4>
+                <p id="pdf-diet-notes"></p>
+            </div>
+            
+            <div class="doctor-signature">
+                <div class="signature-container">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='60'%3E%3Cpath d='M10,30 Q50,10 90,30 Q130,50 190,20' stroke='%234e73df' stroke-width='2' fill='none'/%3E%3C/svg%3E" 
+                         class="pdf-signature" alt="Doctor Signature">
+                </div>
+                <div class="doctor-info">
+                    <h4>Dr. Riya Sharma</h4>
+                    <p>BHMS, Certified Nutritionist</p>
+                    <div class="social-media">
+                        <span>instagram@aarogya.aahar</span><br>
+                        <span>facebook@aarogya.aahar</span><br>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const { jsPDF } = window.jspdf;
+            
+            // Initialize diet table
+            initializeDietTable();
+            
+            // Form toggle functionality
+            const prescriptionBtn = document.getElementById('prescription-btn');
+            const dietBtn = document.getElementById('diet-btn');
+            const prescriptionForm = document.getElementById('prescription-form');
+            const dietForm = document.getElementById('diet-form');
+            
+            prescriptionBtn.addEventListener('click', function() {
+                prescriptionForm.classList.add('active');
+                dietForm.classList.remove('active');
+                prescriptionBtn.classList.add('active');
+                dietBtn.classList.remove('active');
+            });
+            
+            dietBtn.addEventListener('click', function() {
+                dietForm.classList.add('active');
+                prescriptionForm.classList.remove('active');
+                dietBtn.classList.add('active');
+                prescriptionBtn.classList.remove('active');
+            });
+            
+            // Show prescription form by default
+            prescriptionBtn.click();
+            
+            // Diet table functions
+            function initializeDietTable() {
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const tableBody = document.querySelector('#diet-table tbody');
+                tableBody.innerHTML = '';
+                
+                days.forEach(day => {
+                    const row = document.createElement('tr');
+                    const dayCell = document.createElement('td');
+                    dayCell.textContent = day;
+                    row.appendChild(dayCell);
+                    
+                    for (let i = 0; i < 4; i++) {
+                        const cell = document.createElement('td');
+                        const textarea = document.createElement('textarea');
+                        textarea.rows = 2;
+                        cell.appendChild(textarea);
+                        row.appendChild(cell);
+                    }
+                    
+                    tableBody.appendChild(row);
+                });
+            }
+            
+            document.getElementById('diet-duration').addEventListener('change', function() {
+                updateDietTable();
+            });
+            
+            function updateDietTable() {
+                const duration = parseInt(document.getElementById('diet-duration').value);
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const tableBody = document.querySelector('#diet-table tbody');
+                tableBody.innerHTML = '';
+                
+                for (let week = 1; week <= duration; week++) {
+                    days.forEach(day => {
+                        const row = document.createElement('tr');
+                        const dayCell = document.createElement('td');
+                        dayCell.textContent = `${day} (Week ${week})`;
+                        row.appendChild(dayCell);
+                        
+                        for (let i = 0; i < 4; i++) {
+                            const cell = document.createElement('td');
+                            const textarea = document.createElement('textarea');
+                            textarea.rows = 2;
+                            cell.appendChild(textarea);
+                            row.appendChild(cell);
+                        }
+                        
+                        tableBody.appendChild(row);
+                    });
+                }
+            }
+            
+            // PDF Generation for Prescription
+            document.getElementById('generate-prescription').addEventListener('click', generatePrescriptionPDF);
+            
+            function generatePrescriptionPDF() {
+                // Get form data
+                const patientName = document.getElementById('patient-name').value;
+                const patientAge = document.getElementById('patient-age').value;
+                const patientGender = document.getElementById('patient-gender').value;
+                const prescriptionDate = document.getElementById('prescription-date').value;
+                const diagnosis = document.getElementById('diagnosis').value;
+                const medicines = document.getElementById('medicines').value;
+                const tests = document.getElementById('tests').value;
+                const nextVisit = document.getElementById('next-visit').value;
+                const doctorNotes = document.getElementById('doctor-notes').value;
+                
+                // Validate required fields
+                if (!patientName || !patientAge || !patientGender || !prescriptionDate || !medicines) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                // Update the PDF template
+                document.getElementById('pdf-prescription-date').textContent = formatDate(prescriptionDate);
+                document.getElementById('pdf-patient-name').textContent = patientName;
+                document.getElementById('pdf-patient-age-gender').textContent = `${patientAge}/${patientGender}`;
+                document.getElementById('pdf-diagnosis').textContent = diagnosis || '--';
+                
+                // Format medicines
+                const medicinesList = document.getElementById('pdf-medicines');
+                medicinesList.innerHTML = '';
+                const medicineItems = medicines.split('\n').filter(item => item.trim() !== '');
+                medicineItems.forEach(item => {
+                    const p = document.createElement('p');
+                    p.textContent = `• ${item.trim()}`;
+                    medicinesList.appendChild(p);
+                });
+                
+                document.getElementById('pdf-tests').textContent = tests || '--';
+                document.getElementById('pdf-next-visit').textContent = nextVisit ? formatDate(nextVisit) : '--';
+                document.getElementById('pdf-doctor-notes').textContent = doctorNotes || '--';
+                
+                // Generate PDF
+                const element = document.getElementById('prescription-template');
+                generatePDF(element, `Prescription_${patientName.replace(/\s/g, '_')}_${formatDate(prescriptionDate)}`);
+            }
+            
+            // PDF Generation for Diet Chart
+            document.getElementById('generate-diet').addEventListener('click', generateDietPDF);
+            
+            function generateDietPDF() {
+                // Get form data
+                const patientName = document.getElementById('diet-patient-name').value;
+                const patientAge = document.getElementById('diet-patient-age').value;
+                const condition = document.getElementById('diet-condition').value;
+                const duration = document.getElementById('diet-duration').value;
+                const dietNotes = document.getElementById('diet-notes').value;
+                
+                // Validate required fields
+                if (!patientName || !patientAge || !condition || !duration) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                // Update the PDF template
+                const today = new Date();
+                document.getElementById('pdf-diet-date').textContent = formatDate(today.toISOString().split('T')[0]);
+                document.getElementById('pdf-diet-patient-name').textContent = patientName;
+                document.getElementById('pdf-diet-patient-age').textContent = patientAge;
+                document.getElementById('pdf-diet-condition').textContent = condition;
+                document.getElementById('pdf-diet-duration').textContent = duration;
+                document.getElementById('pdf-diet-notes').textContent = dietNotes || '--';
+                
+                // Populate diet table in PDF
+                const pdfDietTable = document.querySelector('#pdf-diet-table tbody');
+                pdfDietTable.innerHTML = '';
+                
+                const rows = document.querySelectorAll('#diet-table tbody tr');
+                rows.forEach(row => {
+                    const newRow = document.createElement('tr');
+                    
+                    // Day cell
+                    const dayCell = document.createElement('td');
+                    dayCell.textContent = row.cells[0].textContent;
+                    newRow.appendChild(dayCell);
+                    
+                    // Time cells
+                    for (let i = 1; i < 5; i++) {
+                        const timeCell = document.createElement('td');
+                        timeCell.textContent = row.cells[i].querySelector('textarea').value || '--';
+                        newRow.appendChild(timeCell);
+                    }
+                    
+                    pdfDietTable.appendChild(newRow);
+                });
+                
+                // Generate PDF
+                const element = document.getElementById('diet-template');
+                generatePDF(element, `Diet_Chart_${patientName.replace(/\s/g, '_')}_${formatDate(today.toISOString().split('T')[0])}`);
+            }
+            
+            // Common PDF generation function
+            function generatePDF(element, filename) {
+                html2canvas(element, {
+                    scale: 2,
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true,
+                    scrollX: 0,
+                    scrollY: 0
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    const imgWidth = 210; // A4 width in mm
+                    const imgHeight = canvas.height * imgWidth / canvas.width;
+                    
+                    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                    pdf.save(`${filename}.pdf`);
+                });
+            }
+            
+            // Format date as DD Month YYYY
+            function formatDate(dateString) {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+            }
+        });
+    </script>
+</body>
+</html>
