@@ -294,20 +294,6 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-	
-	.doctor-signature {
-    		margin-top: 50px;
-    		width: 100%;
-	}
-
-	.signature-container {
-    		margin-left: auto;
-    		text-align: right;
-	}
-
-	.social-media p {
-    		margin: 5px 0;
-	}
 
         /* PDF Template Styles (hidden) */
         .pdf-template {
@@ -364,14 +350,21 @@
 
         .doctor-signature {
             margin-top: 50px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
+            width: 100%;
+        }
+
+        .signature-container {
+            margin-left: auto;
+            text-align: right;
         }
 
         .pdf-signature {
             height: 60px;
             margin-right: 20px;
+        }
+
+        .social-media p {
+            margin: 5px 0;
         }
 
         /* Responsive adjustments */
@@ -420,7 +413,7 @@
             </div>
             <div class="contact-info">
                 <p><i class="fas fa-phone"></i> +91 98885 31577</p>
-		<p><i class="fas fa-envelope"></i> aarogyaaahar4@gmail.com </p>
+                <p><i class="fas fa-envelope"></i> aarogyaaahar4@gmail.com </p>
                 <p><i class="fas fa-map-marker-alt"></i> SCF 10. New Aggar Nagar, Ludhiana</p>
             </div>
         </header>
@@ -428,11 +421,11 @@
         <div class="doctor-profile">
             <div class="doctor-details">
                 <h2>Dr. Riya Sharma</h2>
-                <p class="qualification">BHMS (PB),  Certified Nutritionist</p>
+                <p class="qualification">BHMS (PB)</p>
+                <p class="qualification">Certified Nutritionist</p>
                 <div class="social-media">
                     <a href="#"><i class="fab fa-instagram"></i> aarogya.aahar</a>
                     <a href="#"><i class="fab fa-facebook"></i> aarogya.aahar</a>
-                    
                 </div>
             </div>
         </div>
@@ -605,23 +598,22 @@
             </div>
             
             <div class="doctor-signature">
-    		<div class="doctor-info" style="text-align: left; width: 100%;">
-        	<div style="display: flex; justify-content: space-between; align-items: flex-end;">
-            <div>
-                <h4>Dr. Riya Sharma</h4>
-                <p>BHMS(Pb)</p>
-                <p>Certified Nutritionist</p>
-                <div class="social-media">
-                    <p>instagram: aarogya.aahar</p>
-                    <p>facebook: aarogya.aahar</p>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div>
+                        <h4>Dr. Riya Sharma</h4>
+                        <p>BHMS(Pb)</p>
+                        <p>Certified Nutritionist</p>
+                        <div class="social-media">
+                            <p>instagram: aarogya.aahar</p>
+                            <p>facebook: aarogya.aahar</p>
+                        </div>
+                    </div>
+                    <div class="signature-container">
+                        <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
+                    </div>
                 </div>
-            	</div>
-            	<div class="signature-container">
-                <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
-	</div>
-	</div>
-      </div>
-     </div>
+            </div>
+        </div>
     </div>
     
     <div id="diet-template" class="pdf-template">
@@ -685,20 +677,18 @@
             </div>
             
             <div class="doctor-signature">
-    		<div class="doctor-info" style="text-align: left; width: 100%;">
-        	<div style="display: flex; justify-content: space-between; align-items: flex-end;">
-            	<div>
-                <h4>Dr. Riya Sharma</h4>
-                <p>BHMS(Pb)</p>
-                <p>Certified Nutritionist</p>
-                <div class="social-media">
-                    <p>instagram: aarogya.aahar</p>
-                    <p>facebook: aarogya.aahar</p>
-                </div>
-            	</div>
-            	<div class="signature-container">
-               	 <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
-                        
+                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div>
+                        <h4>Dr. Riya Sharma</h4>
+                        <p>BHMS(Pb)</p>
+                        <p>Certified Nutritionist</p>
+                        <div class="social-media">
+                            <p>instagram: aarogya.aahar</p>
+                            <p>facebook: aarogya.aahar</p>
+                        </div>
+                    </div>
+                    <div class="signature-container">
+                        <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
                     </div>
                 </div>
             </div>
@@ -708,9 +698,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const { jsPDF } = window.jspdf;
+            
             // Set today's date as default
-	    document.getElementById('prescription-date').valueAsDate = new Date();
-	    document.getElementById('diet-date').valueAsDate = new Date();
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('prescription-date').value = today;
+            document.getElementById('next-visit').value = today;
+            document.getElementById('diet-date').value = today;
+            
             // Initialize diet table
             initializeDietTable();
             
