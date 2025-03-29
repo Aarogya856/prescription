@@ -414,7 +414,7 @@
         <div class="doctor-profile">
             <div class="doctor-details">
                 <h2>Dr. Riya Sharma</h2>
-                <p class="qualification">BHMS, Certified Nutritionist</p>
+                <p class="qualification">BHMS (PB),  Certified Nutritionist</p>
                 <div class="social-media">
                     <a href="#"><i class="fab fa-instagram"></i> aarogya.aahar</a>
                     <a href="#"><i class="fab fa-facebook"></i> aarogya.aahar</a>
@@ -591,21 +591,23 @@
             </div>
             
             <div class="doctor-signature">
-                <div class="signature-container">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='60'%3E%3Cpath d='M10,30 Q50,10 90,30 Q130,50 190,20' stroke='%234e73df' stroke-width='2' fill='none'/%3E%3C/svg%3E" 
-                         class="pdf-signature" alt="Doctor Signature">
+    		<div class="doctor-info" style="text-align: left; width: 100%;">
+        	<div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+                <h4>Dr. Riya Sharma</h4>
+                <p>BHMS(Pb)</p>
+                <p>Certified Nutritionist</p>
+                <div class="social-media">
+                    <p>instagram: aarogya.aahar</p>
+                    <p>facebook: aarogya.aahar</p>
                 </div>
-                <div class="doctor-info">
-                    <h4>Dr. Riya Sharma</h4>
-                    <p>BHMS, Certified Nutritionist</p>
-                    <div class="social-media">
-                        <span>instagram@aarogya.aahar</span><br>
-                        <span>facebook@aarogya.aahar</span><br>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+            	</div>
+            	<div class="signature-container">
+                <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
+	</div>
+	</div>
+      </div>
+     </div>
     </div>
     
     <div id="diet-template" class="pdf-template">
@@ -617,7 +619,7 @@
                 </div>
                 <div class="clinic-info">
                     <h2>Aarogya Aahar</h2>
-                    <p>SCF 10. New Aggar Nagar, Ludhiana</p>
+                    <p>SCF 10, New Aggar Nagar, Ludhiana</p>
                     <p>Contact: +91 98885 31577</p>
                 </div>
             </div>
@@ -669,16 +671,19 @@
             </div>
             
             <div class="doctor-signature">
-                <div class="signature-container">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='60'%3E%3Cpath d='M10,30 Q50,10 90,30 Q130,50 190,20' stroke='%234e73df' stroke-width='2' fill='none'/%3E%3C/svg%3E" 
-                         class="pdf-signature" alt="Doctor Signature">
+    		<div class="doctor-info" style="text-align: left; width: 100%;">
+        	<div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            	<div>
+                <h4>Dr. Riya Sharma</h4>
+                <p>BHMS(Pb)</p>
+                <p>Certified Nutritionist</p>
+                <div class="social-media">
+                    <p>instagram: aarogya.aahar</p>
+                    <p>facebook: aarogya.aahar</p>
                 </div>
-                <div class="doctor-info">
-                    <h4>Dr. Riya Sharma</h4>
-                    <p>BHMS, Certified Nutritionist</p>
-                    <div class="social-media">
-                        <span>instagram@aarogya.aahar</span><br>
-                        <span>facebook@aarogya.aahar</span><br>
+            	</div>
+            	<div class="signature-container">
+               	 <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
                         
                     </div>
                 </div>
@@ -689,7 +694,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const { jsPDF } = window.jspdf;
-            
+            // Set today's date as default
+	    document.getElementById('prescription-date').valueAsDate = new Date();
+	    document.getElementById('diet-date').valueAsDate = new Date();
             // Initialize diet table
             initializeDietTable();
             
