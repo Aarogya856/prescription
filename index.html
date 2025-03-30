@@ -350,14 +350,27 @@
 
         .doctor-signature {
             margin-top: 50px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
+            text-align: left;
         }
 
         .pdf-signature {
             height: 60px;
-            margin-right: 20px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .doctor-info {
+            margin-top: 20px;
+        }
+
+        .social-media {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .signature-container {
+            margin-bottom: 20px;
         }
 
         /* Responsive adjustments */
@@ -406,7 +419,7 @@
             </div>
             <div class="contact-info">
                 <p><i class="fas fa-phone"></i> +91 98885 31577</p>
-		<p><i class="fas fa-envelope"></i> aarogyaaahar4@gmail.com </p>
+                <p><i class="fas fa-envelope"></i> aarogyaaahar4@gmail.com</p>
                 <p><i class="fas fa-map-marker-alt"></i> SCF 10. New Aggar Nagar, Ludhiana</p>
             </div>
         </header>
@@ -418,7 +431,6 @@
                 <div class="social-media">
                     <a href="#"><i class="fab fa-instagram"></i> aarogya.aahar</a>
                     <a href="#"><i class="fab fa-facebook"></i> aarogya.aahar</a>
-                    
                 </div>
             </div>
         </div>
@@ -511,9 +523,11 @@
                                 <tr>
                                     <th>Day/Time</th>
                                     <th>Morning</th>
-                                    <th>Afternoon</th>
+                                    <th>Breakfast</th>
+                                    <th>Mid-Meal</th>
+                                    <th>Lunch</th>
                                     <th>Evening</th>
-                                    <th>Night</th>
+                                    <th>Dinner</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -540,8 +554,7 @@
         <div class="prescription-pdf">
             <div class="pdf-header">
                 <div>
-                    <img src="logo.png" 
-                         class="pdf-logo" alt="Clinic Logo">
+                    <img src="logo.png" class="pdf-logo" alt="Clinic Logo">
                 </div>
                 <div class="clinic-info">
                     <h2>Aarogya Aahar</h2>
@@ -592,15 +605,15 @@
             
             <div class="doctor-signature">
                 <div class="signature-container">
-                    <img src="signature.png"  class="pdf-signature" alt="Doctor Signature">
+                    <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
                 </div>
                 <div class="doctor-info">
                     <h4>Dr. Riya Sharma</h4>
-                    <p>BHMS, Certified Nutritionist</p>
+                    <p>BHMS(Pb)</p>
+		    <p>Certified Nutritionist </p>
                     <div class="social-media">
-                        <span>instagram@aarogya.aahar</span><br>
-                        <span>facebook@aarogya.aahar</span><br>
-                        
+                        <span>Instagram: @aarogya.aahar</span><br>
+                        <span>Facebook: @aarogya.aahar</span>
                     </div>
                 </div>
             </div>
@@ -611,8 +624,7 @@
         <div class="diet-pdf">
             <div class="pdf-header">
                 <div>
-                    <img src="logo.png" 
-                         class="pdf-logo" alt="Clinic Logo">
+                    <img src="logo.png" class="pdf-logo" alt="Clinic Logo">
                 </div>
                 <div class="clinic-info">
                     <h2>Aarogya Aahar</h2>
@@ -651,9 +663,11 @@
                         <tr>
                             <th>Day/Time</th>
                             <th>Morning</th>
-                            <th>Afternoon</th>
+                            <th>Breakfast</th>
+                            <th>Mid-Meal</th>
+                            <th>Lunch</th>
                             <th>Evening</th>
-                            <th>Night</th>
+                            <th>Dinner</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -673,11 +687,11 @@
                 </div>
                 <div class="doctor-info">
                     <h4>Dr. Riya Sharma</h4>
-                    <p>BHMS, Certified Nutritionist</p>
+                    <p>BHMS(Pb)</p>
+		    <p>Certified Nutritionist </p>
                     <div class="social-media">
-                        <span>instagram@aarogya.aahar</span><br>
-                        <span>facebook@aarogya.aahar</span><br>
-                        
+                        <span>Instagram: @aarogya.aahar</span><br>
+                        <span>Facebook: @aarogya.aahar</span>
                     </div>
                 </div>
             </div>
@@ -726,7 +740,8 @@
                     dayCell.textContent = day;
                     row.appendChild(dayCell);
                     
-                    for (let i = 0; i < 4; i++) {
+                    // Create cells for Morning, Breakfast, Mid-Meal, Lunch, Evening, Dinner
+                    for (let i = 0; i < 6; i++) {
                         const cell = document.createElement('td');
                         const textarea = document.createElement('textarea');
                         textarea.rows = 2;
@@ -755,7 +770,8 @@
                         dayCell.textContent = `${day} (Week ${week})`;
                         row.appendChild(dayCell);
                         
-                        for (let i = 0; i < 4; i++) {
+                        // Create cells for each meal time
+                        for (let i = 0; i < 6; i++) {
                             const cell = document.createElement('td');
                             const textarea = document.createElement('textarea');
                             textarea.rows = 2;
@@ -853,8 +869,8 @@
                     dayCell.textContent = row.cells[0].textContent;
                     newRow.appendChild(dayCell);
                     
-                    // Time cells
-                    for (let i = 1; i < 5; i++) {
+                    // Time cells (6 columns now)
+                    for (let i = 1; i < 7; i++) {
                         const timeCell = document.createElement('td');
                         timeCell.textContent = row.cells[i].querySelector('textarea').value || '--';
                         newRow.appendChild(timeCell);
