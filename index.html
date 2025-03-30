@@ -17,6 +17,7 @@
             --danger: #e74a3b;
             --success: #1cc88a;
             --info: #36b9cc;
+            --clinic-orange: #FF7F00;
         }
 
         * {
@@ -295,7 +296,7 @@
             background-color: #f2f2f2;
         }
 
-        /* PDF Template Styles (hidden) */
+        /* PDF Template Styles */
         .pdf-template {
             position: absolute;
             left: -9999px;
@@ -310,15 +311,22 @@
 
         .pdf-header {
             display: flex;
-            justify-content: flex-end;
-            align-items: left;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 20px;
             border-bottom: 2px solid var(--primary);
             padding-bottom: 15px;
+            width: 100%;
+        }
+
+        .clinic-info {
+            text-align: right;
+            margin-left: auto;
         }
 
         .pdf-logo {
             height: 80px;
+            margin-right: 20px;
         }
 
         .pdf-title {
@@ -360,7 +368,6 @@
         .doctor-signature {
             margin-top: 50px;
             text-align: right;
-            align-self: flex-end;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -374,6 +381,7 @@
 
         .doctor-info {
             margin-top: 10px;
+            text-align: right;
         }
 
         .pdf-footer {
@@ -578,8 +586,8 @@
                     <img src="logo.png" class="pdf-logo" alt="Clinic Logo">
                 </div>
                 <div class="clinic-info">
-                    <h2 style="color: #FF7F00; text-align: right;">Aarogya Aahar</h2>
-                    <p>SCF 10. New Aggar Nagar, Ludhiana</p>
+                    <h2 style="color: var(--clinic-orange);">Aarogya Aahar</h2>
+                    <p>SCF 10, New Aggar Nagar, Ludhiana</p>
                     <p><i class="fas fa-phone"></i> +91 98885 31577</p>
                 </div>
             </div>
@@ -631,7 +639,7 @@
                 <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
                 <div class="doctor-info">
                     <h4>Dr. Riya Sharma</h4>
-                    <p>BHMS(Pb)</p>
+                    <p>BHMS</p>
                     <p>Certified Nutritionist</p>
                 </div>
             </div>
@@ -651,8 +659,8 @@
                     <img src="logo.png" class="pdf-logo" alt="Clinic Logo">
                 </div>
                 <div class="clinic-info">
-                    <h2>Aarogya Aahar</h2>
-                    <p>SCF 10. New Aggar Nagar, Ludhiana</p>
+                    <h2 style="color: var(--clinic-orange);">Aarogya Aahar</h2>
+                    <p>SCF 10, New Aggar Nagar, Ludhiana</p>
                     <p><i class="fas fa-phone"></i> +91 98885 31577</p>
                 </div>
             </div>
@@ -712,7 +720,7 @@
                 <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
                 <div class="doctor-info">
                     <h4>Dr. Riya Sharma</h4>
-                    <p>BHMS(Pb)</p>
+                    <p>BHMS</p>
                     <p>Certified Nutritionist</p>
                 </div>
             </div>
