@@ -302,7 +302,7 @@
             left: -9999px;
             width: 210mm;
             min-height: 297mm;
-            padding: 20mm;
+            padding: 15mm;
             background: white;
             font-family: Arial, sans-serif;
             display: flex;
@@ -324,10 +324,10 @@
             margin-left: auto;
         }
 
-        .pdf-logo {
-            height: 100px;
-            width: auto;
-            margin-right: 20px;
+       .pdf-logo {
+        height: 100px;  /* Increased from 80px */
+        width: auto;    /* Maintains aspect ratio */
+        margin-right: 20px;
         }
 
         .pdf-title {
@@ -403,29 +403,6 @@
             color: var(--primary);
         }
 
-        /* Diet Chart PDF Specific Styles */
-        #diet-template {
-            padding-bottom: 40mm;
-        }
-        
-        #diet-template .diet-table-section {
-            page-break-inside: avoid;
-        }
-        
-        #diet-template .diet-notes {
-            page-break-after: avoid;
-        }
-        
-        #diet-template .doctor-signature {
-            margin-top: 30px;
-            page-break-inside: avoid;
-        }
-        
-        #diet-template #pdf-diet-table th,
-        #diet-template #pdf-diet-table td {
-            padding: 8px;
-        }
-
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .header {
@@ -459,20 +436,223 @@
     </style>
 </head>
 <body>
-    <!-- All your existing HTML remains exactly the same until the PDF templates -->
     <div class="container">
-        <!-- Header, doctor profile, and main content remain unchanged -->
-        <!-- ... -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="logo.png" alt="Aarogya Aahar Logo" style="width: 60px; height: 60px;">
+                </div>
+                <div class="clinic-info">
+                    <h1>Aarogya Aahar</h1>
+                    <p>Homeopathy to Cure, Diet to Sustain – Your Health, Our Priority</p>
+                </div>
+            </div>
+            <div class="contact-info">
+                <p><i class="fas fa-phone"></i> +91 98885 31577</p>
+                <p><i class="fas fa-envelope"></i> aarogyaaahar4@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> SCF 10. New Aggar Nagar, Ludhiana</p>
+            </div>
+        </header>
+        
+        <div class="doctor-profile">
+            <div class="doctor-details">
+                <h2>Dr. Riya Sharma</h2>
+                <p class="qualification">BHMS, Certified Nutritionist</p>
+                <div class="social-media">
+                    <a href="#"><i class="fab fa-instagram"></i> aarogya.aahar</a>
+                    <a href="#"><i class="fab fa-facebook"></i> aarogya.aahar</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="option-buttons">
+                <button id="prescription-btn" class="btn btn-primary">
+                    <i class="fas fa-prescription"></i> Create Prescription
+                </button>
+                <button id="diet-btn" class="btn btn-success">
+                    <i class="fas fa-utensils"></i> Create Diet Chart
+                </button>
+            </div>
+            
+            <!-- Prescription Form -->
+            <div id="prescription-form" class="form-container">
+                <h2>Prescription Form</h2>
+                <form id="prescription-data">
+                    <div class="form-group">
+                        <label for="patient-name">Patient Name:</label>
+                        <input type="text" id="patient-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-age">Age:</label>
+                        <input type="number" id="patient-age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-gender">Gender:</label>
+                        <select id="patient-gender" required>
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="prescription-date">Date:</label>
+                        <input type="date" id="prescription-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diagnosis">Diagnosis:</label>
+                        <textarea id="diagnosis" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="medicines">Medicines & Advice:</label>
+                        <textarea id="medicines" rows="5" placeholder="Enter medicines with dosage and timing..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tests">Tests Recommended (if any):</label>
+                        <textarea id="tests" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="next-visit">Next Visit (if any):</label>
+                        <input type="date" id="next-visit">
+                    </div>
+                    <div class="form-group">
+                        <label for="doctor-notes">Additional Notes:</label>
+                        <textarea id="doctor-notes" rows="3"></textarea>
+                    </div>
+                    <button type="button" id="generate-prescription" class="btn btn-primary">
+                        <i class="fas fa-file-pdf"></i> Generate Prescription PDF
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Diet Chart Form -->
+            <div id="diet-form" class="form-container">
+                <h2>Diet Chart Form</h2>
+                <form id="diet-data">
+                    <div class="form-group">
+                        <label for="diet-patient-name">Patient Name:</label>
+                        <input type="text" id="diet-patient-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diet-patient-age">Age:</label>
+                        <input type="number" id="diet-patient-age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diet-condition">Health Condition:</label>
+                        <input type="text" id="diet-condition" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diet-duration">Duration (weeks):</label>
+                        <input type="number" id="diet-duration" value="1" min="1" required>
+                    </div>
+                    
+                    <div class="diet-table-container">
+                        <table id="diet-table">
+                            <thead>
+                                <tr>
+                                    <th>Day/Time</th>
+                                    <th>Morning</th>
+                                    <th>Breakfast</th>
+                                    <th>Mid-Meal</th>
+                                    <th>Lunch</th>
+                                    <th>Evening</th>
+                                    <th>Dinner</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows will be added by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="diet-notes">Additional Notes:</label>
+                        <textarea id="diet-notes" rows="3"></textarea>
+                    </div>
+                    
+                    <button type="button" id="generate-diet" class="btn btn-success">
+                        <i class="fas fa-file-pdf"></i> Generate Diet Chart PDF
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- PDF Templates (hidden) -->
-    <!-- Prescription Template (NO CHANGES) -->
     <div id="prescription-template" class="pdf-template">
-        <!-- Keep existing prescription template exactly as is -->
-        <!-- ... -->
+        <div class="prescription-pdf">
+            <div class="pdf-header">
+                <div>
+                    <img src="logo.png" class="pdf-logo" alt="Clinic Logo">
+                </div>
+                <div class="clinic-info">
+                    <h2 style="color: var(--clinic-orange);">Aarogya Aahar</h2>
+                    <p><i class="fas fa-map-marker-alt"></i> SCF 10, New Aggar Nagar, Ludhiana</p>
+                    <p><i class="fas fa-phone"></i> +91 98885 31577</p>
+                </div>
+            </div>
+            
+            <div class="pdf-title">
+               <h1 style="font-size: 24px;">PRESCRIPTION</h1>
+            </div>
+            
+            <div class="prescription-date">
+                Date: <span id="pdf-prescription-date"></span>
+            </div>
+            
+            <div class="patient-info">
+                <div class="info-row">
+                    <span class="info-label">Patient Name:</span>
+                    <span class="info-value" id="pdf-patient-name"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Age/Sex:</span>
+                    <span class="info-value" id="pdf-patient-age-gender"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Diagnosis:</span>
+                    <span class="info-value" id="pdf-diagnosis"></span>
+                </div>
+            </div>
+            
+            <div class="medicines-section">
+                <h3>Rx</h3>
+                <div id="pdf-medicines" class="medicines-list"></div>
+            </div>
+            
+            <div class="additional-info">
+                <div class="info-row">
+                    <span class="info-label">Tests Recommended:</span>
+                    <span class="info-value" id="pdf-tests"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Next Visit:</span>
+                    <span class="info-value" id="pdf-next-visit"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Notes:</span>
+                    <span class="info-value" id="pdf-doctor-notes"></span>
+                </div>
+            </div>
+            
+            <div class="doctor-signature">
+                <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
+                <div class="doctor-info">
+                    <h4>Dr. Riya Sharma</h4>
+                    <p>BHMS</p>
+                    <p>Certified Nutritionist</p>
+                </div>
+            </div>
+            
+            <div class="pdf-footer">
+                <span><i class="fab fa-instagram"></i> @aarogya.aahar</span>
+                <span><i class="fab fa-facebook"></i> @aarogya.aahar</span>
+                <span><i class="fas fa-envelope"></i> aarogyaaahar4@gmail.com</span>
+            </div>
+        </div>
     </div>
     
-    <!-- Modified Diet Chart Template -->
     <div id="diet-template" class="pdf-template">
         <div class="diet-pdf">
             <div class="pdf-header">
@@ -487,7 +667,7 @@
             </div>
             
             <div class="pdf-title">
-                <h1 style="font-size: 24px; margin: 10px 0;">DIET CHART</h1>
+                <h1>DIET CHART</h1>
             </div>
             
             <div class="prescription-date">
@@ -596,6 +776,7 @@
                     dayCell.textContent = day;
                     row.appendChild(dayCell);
                     
+                    // Create cells for Morning, Breakfast, Mid-Meal, Lunch, Evening, Dinner
                     for (let i = 0; i < 6; i++) {
                         const cell = document.createElement('td');
                         const textarea = document.createElement('textarea');
@@ -625,6 +806,7 @@
                         dayCell.textContent = `${day} (Week ${week})`;
                         row.appendChild(dayCell);
                         
+                        // Create cells for each meal time
                         for (let i = 0; i < 6; i++) {
                             const cell = document.createElement('td');
                             const textarea = document.createElement('textarea');
@@ -638,14 +820,53 @@
                 }
             }
             
-            // PDF Generation for Prescription (NO CHANGES)
+            // PDF Generation for Prescription
             document.getElementById('generate-prescription').addEventListener('click', generatePrescriptionPDF);
             
             function generatePrescriptionPDF() {
-                // ... keep existing prescription PDF generation code exactly the same ...
+                // Get form data
+                const patientName = document.getElementById('patient-name').value;
+                const patientAge = document.getElementById('patient-age').value;
+                const patientGender = document.getElementById('patient-gender').value;
+                const prescriptionDate = document.getElementById('prescription-date').value;
+                const diagnosis = document.getElementById('diagnosis').value;
+                const medicines = document.getElementById('medicines').value;
+                const tests = document.getElementById('tests').value;
+                const nextVisit = document.getElementById('next-visit').value;
+                const doctorNotes = document.getElementById('doctor-notes').value;
+                
+                // Validate required fields
+                if (!patientName || !patientAge || !patientGender || !prescriptionDate || !medicines) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                // Update the PDF template
+                document.getElementById('pdf-prescription-date').textContent = formatDate(prescriptionDate);
+                document.getElementById('pdf-patient-name').textContent = patientName;
+                document.getElementById('pdf-patient-age-gender').textContent = `${patientAge}/${patientGender}`;
+                document.getElementById('pdf-diagnosis').textContent = diagnosis || '--';
+                
+                // Format medicines
+                const medicinesList = document.getElementById('pdf-medicines');
+                medicinesList.innerHTML = '';
+                const medicineItems = medicines.split('\n').filter(item => item.trim() !== '');
+                medicineItems.forEach(item => {
+                    const p = document.createElement('p');
+                    p.textContent = `• ${item.trim()}`;
+                    medicinesList.appendChild(p);
+                });
+                
+                document.getElementById('pdf-tests').textContent = tests || '--';
+                document.getElementById('pdf-next-visit').textContent = nextVisit ? formatDate(nextVisit) : '--';
+                document.getElementById('pdf-doctor-notes').textContent = doctorNotes || '--';
+                
+                // Generate PDF
+                const element = document.getElementById('prescription-template');
+                generatePDF(element, `Prescription_${patientName.replace(/\s/g, '_')}_${formatDate(prescriptionDate)}`);
             }
             
-            // Modified PDF Generation for Diet Chart
+            // PDF Generation for Diet Chart
             document.getElementById('generate-diet').addEventListener('click', generateDietPDF);
             
             function generateDietPDF() {
@@ -671,7 +892,7 @@
                 document.getElementById('pdf-diet-duration').textContent = duration;
                 document.getElementById('pdf-diet-notes').textContent = dietNotes || '--';
                 
-                // Populate diet table in PDF with reduced padding
+                // Populate diet table in PDF
                 const pdfDietTable = document.querySelector('#pdf-diet-table tbody');
                 pdfDietTable.innerHTML = '';
                 
@@ -682,57 +903,56 @@
                     // Day cell
                     const dayCell = document.createElement('td');
                     dayCell.textContent = row.cells[0].textContent;
-                    dayCell.style.padding = '8px';
-                    dayCell.style.border = '1px solid #ddd';
                     newRow.appendChild(dayCell);
                     
-                    // Time cells (6 columns)
+                    // Time cells (6 columns now)
                     for (let i = 1; i < 7; i++) {
                         const timeCell = document.createElement('td');
                         timeCell.textContent = row.cells[i].querySelector('textarea').value || '--';
-                        timeCell.style.padding = '8px';
-                        timeCell.style.border = '1px solid #ddd';
                         newRow.appendChild(timeCell);
                     }
                     
                     pdfDietTable.appendChild(newRow);
                 });
                 
-                // Generate PDF with multi-page support
+                // Generate PDF
                 const element = document.getElementById('diet-template');
-                
-                html2canvas(element, {
-                    scale: 2,
-                    logging: false,
-                    useCORS: true,
-                    allowTaint: true,
-                    scrollX: 0,
-                    scrollY: 0,
-                    windowHeight: element.scrollHeight + 200
-                }).then(canvas => {
-                    const imgData = canvas.toDataURL('image/png');
-                    const pdf = new jsPDF('p', 'mm', 'a4');
-                    const imgWidth = 210;
-                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                    
-                    // Add first page
-                    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-                    
-                    // Add additional pages if needed
-                    let heightLeft = imgHeight;
-                    let position = 0;
-                    const pageHeight = 297; // A4 height in mm
-                    
-                    while (heightLeft >= pageHeight) {
-                        position = heightLeft - pageHeight;
-                        pdf.addPage();
-                        pdf.addImage(imgData, 'PNG', 0, -position, imgWidth, imgHeight);
-                        heightLeft -= pageHeight;
-                    }
-                    
-                    pdf.save(`Diet_Chart_${patientName.replace(/\s/g, '_')}_${formatDate(today.toISOString().split('T')[0])}.pdf`);
-                });
+                generatePDF(element, `Diet_Chart_${patientName.replace(/\s/g, '_')}_${formatDate(today.toISOString().split('T')[0])}`);
             }
+            
+            // Common PDF generation function
+            function generatePDF(element, filename) {
+    html2canvas(element, {
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
+        scrollX: 0,
+        scrollY: 0
+    }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        
+        let heightLeft = imgHeight;
+        let position = 0;
+        
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        
+        // Add new page if content is too long
+        while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+        }
+        
+        pdf.save(`${filename}.pdf`);
+    });
+}
             
             // Format date as DD Month YYYY
             function formatDate(dateString) {
