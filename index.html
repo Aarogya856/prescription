@@ -304,6 +304,8 @@
             padding: 20mm;
             background: white;
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
         }
 
         .pdf-header {
@@ -324,6 +326,13 @@
             margin: 20px 0;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
+        }
+
+        .prescription-date {
+            text-align: right;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1rem;
         }
 
         .patient-info, .diet-patient-info {
@@ -350,27 +359,36 @@
 
         .doctor-signature {
             margin-top: 50px;
-            text-align: left;
+            text-align: right;
+            align-self: flex-end;
+            width: 50%;
         }
 
         .pdf-signature {
             height: 60px;
             margin-bottom: 10px;
-            display: block;
         }
 
         .doctor-info {
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
-        .social-media {
-            margin-top: 10px;
+        .pdf-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
             font-size: 12px;
             color: #555;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
         }
 
-        .signature-container {
-            margin-bottom: 20px;
+        .pdf-footer i {
+            margin-right: 5px;
+            color: var(--primary);
         }
 
         /* Responsive adjustments */
@@ -559,13 +577,16 @@
                 <div class="clinic-info">
                     <h2>Aarogya Aahar</h2>
                     <p>SCF 10. New Aggar Nagar, Ludhiana</p>
-                    <p>Contact: +91 98885 31577</p>
+                    <p><i class="fas fa-phone"></i> +91 98885 31577</p>
                 </div>
             </div>
             
             <div class="pdf-title">
                 <h1>PRESCRIPTION</h1>
-                <div class="prescription-date">Date: <span id="pdf-prescription-date"></span></div>
+            </div>
+            
+            <div class="prescription-date">
+                Date: <span id="pdf-prescription-date"></span>
             </div>
             
             <div class="patient-info">
@@ -604,18 +625,17 @@
             </div>
             
             <div class="doctor-signature">
-                <div class="signature-container">
-                    <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
-                </div>
+                <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
                 <div class="doctor-info">
                     <h4>Dr. Riya Sharma</h4>
-                    <p>BHMS(Pb)</p>
-		    <p>Certified Nutritionist </p>
-                    <div class="social-media">
-                        <span>Instagram: @aarogya.aahar</span><br>
-                        <span>Facebook: @aarogya.aahar</span>
-                    </div>
+                    <p>BHMS, Certified Nutritionist</p>
                 </div>
+            </div>
+            
+            <div class="pdf-footer">
+                <span><i class="fab fa-instagram"></i> @aarogya.aahar</span>
+                <span><i class="fab fa-facebook"></i> @aarogya.aahar</span>
+                <span><i class="fas fa-envelope"></i> aarogyaaahar4@gmail.com</span>
             </div>
         </div>
     </div>
@@ -629,13 +649,16 @@
                 <div class="clinic-info">
                     <h2>Aarogya Aahar</h2>
                     <p>SCF 10. New Aggar Nagar, Ludhiana</p>
-                    <p>Contact: +91 98885 31577</p>
+                    <p><i class="fas fa-phone"></i> +91 98885 31577</p>
                 </div>
             </div>
             
             <div class="pdf-title">
                 <h1>DIET CHART</h1>
-                <div class="diet-date">Date: <span id="pdf-diet-date"></span></div>
+            </div>
+            
+            <div class="prescription-date">
+                Date: <span id="pdf-diet-date"></span>
             </div>
             
             <div class="diet-patient-info">
@@ -682,18 +705,17 @@
             </div>
             
             <div class="doctor-signature">
-                <div class="signature-container">
-                    <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
-                </div>
+                <img src="signature.png" class="pdf-signature" alt="Doctor Signature">
                 <div class="doctor-info">
                     <h4>Dr. Riya Sharma</h4>
-                    <p>BHMS(Pb)</p>
-		    <p>Certified Nutritionist </p>
-                    <div class="social-media">
-                        <span>Instagram: @aarogya.aahar</span><br>
-                        <span>Facebook: @aarogya.aahar</span>
-                    </div>
+                    <p>BHMS, Certified Nutritionist</p>
                 </div>
+            </div>
+            
+            <div class="pdf-footer">
+                <span><i class="fab fa-instagram"></i> @aarogya.aahar</span>
+                <span><i class="fab fa-facebook"></i> @aarogya.aahar</span>
+                <span><i class="fas fa-envelope"></i> aarogyaaahar4@gmail.com</span>
             </div>
         </div>
     </div>
