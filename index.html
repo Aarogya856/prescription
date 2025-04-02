@@ -296,6 +296,27 @@
             background-color: #f2f2f2;
         }
 
+        .meal-time-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .time-select {
+            width: 100px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .meal-textarea {
+            flex: 1;
+            min-height: 60px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
         /* PDF Template Styles */
         .pdf-template {
             position: absolute;
@@ -551,7 +572,7 @@
                         <table id="diet-table">
                             <thead>
                                 <tr>
-                                    <th>Day/Time</th>
+                                    <th>Day</th>
                                     <th>Morning</th>
                                     <th>Breakfast</th>
                                     <th>Mid-Meal</th>
@@ -646,8 +667,8 @@
             </div>
             
             <div class="pdf-footer">
-                <span><i class="fab fa-instagram"></i> @aarogya.aahar</span>
-                <span><i class="fab fa-facebook"></i> @aarogya.aahar</span>
+                <span><i class="fab fa-instagram"></i> aarogya.aahar</span>
+                <span><i class="fab fa-facebook"></i> aarogya.aahar</span>
                 <span><i class="fas fa-envelope"></i> aarogyaaahar4@gmail.com</span>
             </div>
         </div>
@@ -697,7 +718,7 @@
                 <table id="pdf-diet-table">
                     <thead>
                         <tr>
-                            <th>Day/Time</th>
+                            <th>Day</th>
                             <th>Morning</th>
                             <th>Breakfast</th>
                             <th>Mid-Meal</th>
@@ -764,6 +785,41 @@
             // Show prescription form by default
             prescriptionBtn.click();
             
+            // Generate time options for dropdown
+            function generateTimeOptions() {
+                const options = [];
+                for (let hour = 5; hour <= 23; hour++) {
+                    for (let minute = 0; minute < 60; minute += 15) {
+                        const ampm = hour >= 12 ? 'PM' : 'AM';
+                        const displayHour = hour > 12 ? hour - 12 : hour;
+                        const displayMinute = minute < 10 ? '0' + minute : minute;
+                        const timeString = `${displayHour}:${displayMinute} ${ampm}`;
+                        const value = `${hour}:${minute < 10 ? '0' + minute : minute}`;
+                        options.push({ value, timeString });
+                    }
+                }
+                return options;
+            }
+            
+            // Create time select dropdown
+            function createTimeSelect(defaultValue = '7:00') {
+                const select = document.createElement('select');
+                select.className = 'time-select';
+                
+                const timeOptions = generateTimeOptions();
+                timeOptions.forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option.value;
+                    opt.textContent = option.timeString;
+                    if (option.value === defaultValue) {
+                        opt.selected = true;
+                    }
+                    select.appendChild(opt);
+                });
+                
+                return select;
+            }
+            
             // Diet table functions
             function initializeDietTable() {
                 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -777,13 +833,32 @@
                     row.appendChild(dayCell);
                     
                     // Create cells for Morning, Breakfast, Mid-Meal, Lunch, Evening, Dinner
-                    for (let i = 0; i < 6; i++) {
+                    const mealTimes = [
+                        { defaultTime: '7:00' }, // Morning
+                        { defaultTime: '8:30' }, // Breakfast
+                        { defaultTime: '11:00' }, // Mid-Meal
+                        { defaultTime: '13:30' }, // Lunch
+                        { defaultTime: '17:00' }, // Evening
+                        { defaultTime: '20:00' }  // Dinner
+                    ];
+                    
+                    mealTimes.forEach(meal => {
                         const cell = document.createElement('td');
+                        const container = document.createElement('div');
+                        
+                        // Time select dropdown
+                        const timeSelect = createTimeSelect(meal.defaultTime);
+                        
+                        // Meal textarea
                         const textarea = document.createElement('textarea');
-                        textarea.rows = 2;
-                        cell.appendChild(textarea);
+                        textarea.className = 'meal-textarea';
+                        textarea.placeholder = 'Enter meal details...';
+                        
+                        container.appendChild(timeSelect);
+                        container.appendChild(textarea);
+                        cell.appendChild(container);
                         row.appendChild(cell);
-                    }
+                    });
                     
                     tableBody.appendChild(row);
                 });
@@ -807,13 +882,32 @@
                         row.appendChild(dayCell);
                         
                         // Create cells for each meal time
-                        for (let i = 0; i < 6; i++) {
+                        const mealTimes = [
+                            { defaultTime: '7:00' }, // Morning
+                            { defaultTime: '8:30' }, // Breakfast
+                            { defaultTime: '11:00' }, // Mid-Meal
+                            { defaultTime: '13:30' }, // Lunch
+                            { defaultTime: '17:00' }, // Evening
+                            { defaultTime: '20:00' }  // Dinner
+                        ];
+                        
+                        mealTimes.forEach(meal => {
                             const cell = document.createElement('td');
+                            const container = document.createElement('div');
+                            
+                            // Time select dropdown
+                            const timeSelect = createTimeSelect(meal.defaultTime);
+                            
+                            // Meal textarea
                             const textarea = document.createElement('textarea');
-                            textarea.rows = 2;
-                            cell.appendChild(textarea);
+                            textarea.className = 'meal-textarea';
+                            textarea.placeholder = 'Enter meal details...';
+                            
+                            container.appendChild(timeSelect);
+                            container.appendChild(textarea);
+                            cell.appendChild(container);
                             row.appendChild(cell);
-                        }
+                        });
                         
                         tableBody.appendChild(row);
                     });
@@ -908,7 +1002,14 @@
                     // Time cells (6 columns now)
                     for (let i = 1; i < 7; i++) {
                         const timeCell = document.createElement('td');
-                        timeCell.textContent = row.cells[i].querySelector('textarea').value || '--';
+                        const container = row.cells[i].querySelector('div');
+                        const timeSelect = container.querySelector('.time-select');
+                        const textarea = container.querySelector('.meal-textarea');
+                        
+                        const selectedTime = timeSelect.options[timeSelect.selectedIndex].text;
+                        const mealDetails = textarea.value || '--';
+                        
+                        timeCell.textContent = `${selectedTime}: ${mealDetails}`;
                         newRow.appendChild(timeCell);
                     }
                     
@@ -922,37 +1023,37 @@
             
             // Common PDF generation function
             function generatePDF(element, filename) {
-    html2canvas(element, {
-        scale: 2,
-        logging: false,
-        useCORS: true,
-        allowTaint: true,
-        scrollX: 0,
-        scrollY: 0
-    }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgWidth = 210; // A4 width in mm
-        const pageHeight = 297; // A4 height in mm
-        const imgHeight = canvas.height * imgWidth / canvas.width;
-        
-        let heightLeft = imgHeight;
-        let position = 0;
-        
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-        
-        // Add new page if content is too long
-        while (heightLeft >= 0) {
-            position = heightLeft - imgHeight;
-            pdf.addPage();
-            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-        }
-        
-        pdf.save(`${filename}.pdf`);
-    });
-}
+                html2canvas(element, {
+                    scale: 2,
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true,
+                    scrollX: 0,
+                    scrollY: 0
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    const imgWidth = 210; // A4 width in mm
+                    const pageHeight = 297; // A4 height in mm
+                    const imgHeight = canvas.height * imgWidth / canvas.width;
+                    
+                    let heightLeft = imgHeight;
+                    let position = 0;
+                    
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                    
+                    // Add new page if content is too long
+                    while (heightLeft >= 0) {
+                        position = heightLeft - imgHeight;
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                        heightLeft -= pageHeight;
+                    }
+                    
+                    pdf.save(`${filename}.pdf`);
+                });
+            }
             
             // Format date as DD Month YYYY
             function formatDate(dateString) {
