@@ -1022,37 +1022,43 @@
             }
             
             // Common PDF generation function
-            function generatePDF(element, filename) {
-                html2canvas(element, {
-                    scale: 2,
-                    logging: false,
-                    useCORS: true,
-                    allowTaint: true,
-                    scrollX: 0,
-                    scrollY: 0
-                }).then(canvas => {
-                    const imgData = canvas.toDataURL('image/png');
-                    const pdf = new jsPDF('p', 'mm', 'a4');
-                    const imgWidth = 210; // A4 width in mm
-                    const pageHeight = 297; // A4 height in mm
-                    const imgHeight = canvas.height * imgWidth / canvas.width;
-                    
-                    let heightLeft = imgHeight;
-                    let position = 0;
-                    
-                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-                    
-                    // Add new page if content is too long
-                    while (heightLeft >= 0) {
-                        position = heightLeft - imgHeight;
-                        pdf.addPage();
-                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                        heightLeft -= pageHeight;
-                    }
-                    
-                    pdf.save(`${filename}.pdf`);
-                });
+        function generatePDF(element, filename) {
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        
+        // Calculate the scale to fit content width
+        const scale = pageWidth / element.offsetWidth;
+        
+        html2canvas(element, {
+            scale: scale * 1.5, // Slightly higher scale for better quality
+            logging: false,
+            useCORS: true,
+            scrollX: 0,
+            scrollY: 0,
+            windowHeight: element.scrollHeight
+        }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = pageWidth;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            
+            let position = 0;
+            let remainingHeight = imgHeight;
+            
+            // Add first page
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            remainingHeight -= pageHeight;
+            
+            // Add additional pages if needed
+            while (remainingHeight > 0) {
+                position = - (pageHeight - remainingHeight);
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                remainingHeight -= pageHeight;
+            }
+            
+            pdf.save(`${filename}.pdf`);
+        });
             }
             
             // Format date as DD Month YYYY
